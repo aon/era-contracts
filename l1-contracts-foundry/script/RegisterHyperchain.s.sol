@@ -21,19 +21,23 @@ contract RegisterHyperchainScript is Script {
         address deployerAddress;
         address ownerAddress;
         uint256 hyperchainChainId;
+
         bool validiumMode;
         uint256 bridgehubCreateNewChainSalt;
         address validatorSenderOperatorCommitEth;
         address validatorSenderOperatorBlobsEth;
+
         address baseToken;
         uint128 baseTokenGasPriceMultiplierNominator;
         uint128 baseTokenGasPriceMultiplierDenominator;
+
         address bridgehub;
         address stateTransitionProxy;
         address validatorTimelock;
         bytes diamondCutData;
         address newDiamondProxy;
     }
+
 
     Config config;
 
@@ -75,7 +79,7 @@ contract RegisterHyperchainScript is Script {
         // Config file must be parsed key by key, otherwise values returned
         // are parsed alfabetically and not by key.
         // https://book.getfoundry.sh/cheatcodes/parse-toml
-        config.ownerAddress = toml.readAddress("$.owner_addr");
+        config.ownerAddress = toml.readAddress("$.owner_address");
 
         config.bridgehub = toml.readAddress("$.deployed_addresses.bridgehub.bridgehub_proxy_addr");
         config.stateTransitionProxy = toml.readAddress(
@@ -89,8 +93,12 @@ contract RegisterHyperchainScript is Script {
         config.bridgehubCreateNewChainSalt = toml.readUint("$.hyperchain.bridgehub_create_new_chain_salt");
         config.baseToken = toml.readAddress("$.hyperchain.base_token_addr");
         config.validiumMode = toml.readBool("$.hyperchain.validium_mode");
-        config.validatorSenderOperatorCommitEth = toml.readAddress("$.hyperchain.validator_sender_operator_commit_eth");
-        config.validatorSenderOperatorBlobsEth = toml.readAddress("$.hyperchain.validator_sender_operator_blobs_eth");
+        config.validatorSenderOperatorCommitEth = toml.readAddress(
+            "$.hyperchain.validator_sender_operator_commit_eth"
+        );
+        config.validatorSenderOperatorBlobsEth = toml.readAddress(
+            "$.hyperchain.validator_sender_operator_blobs_eth"
+        );
         config.baseTokenGasPriceMultiplierNominator = uint128(
             toml.readUint("$.hyperchain.base_token_gas_price_multiplier_nominator")
         );
