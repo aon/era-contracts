@@ -179,10 +179,10 @@ contract RegisterHyperchainScript is Script {
     }
 
     function configureZkSyncStateTransition() internal {
-        IZkSyncHyperchain zkSyncStateTransition = IZkSyncHyperchain(config.newDiamondProxy);
+        IZkSyncHyperchain hyperchain = IZkSyncHyperchain(config.newDiamondProxy);
 
         vm.startBroadcast();
-        zkSyncStateTransition.setTokenMultiplier(
+        hyperchain.setTokenMultiplier(
             config.baseTokenGasPriceMultiplierNominator,
             config.baseTokenGasPriceMultiplierDenominator
         );
@@ -197,11 +197,10 @@ contract RegisterHyperchainScript is Script {
     }
 
     function setPendingAdmin() internal {
-        IZkSyncHyperchain zkSyncStateTransition = IZkSyncHyperchain(config.newDiamondProxy);
+        IZkSyncHyperchain hyperchain = IZkSyncHyperchain(config.newDiamondProxy);
 
-        vm.startBroadcast();
-        zkSyncStateTransition.setPendingAdmin(config.ownerAddress);
-        vm.stopBroadcast();
+        vm.broadcast();
+        hyperchain.setPendingAdmin(config.ownerAddress);
         console.log("Owner set");
     }
 
